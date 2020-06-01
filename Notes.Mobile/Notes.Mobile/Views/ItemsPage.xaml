@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Notes.Mobile.Views.ItemsPage"
+             Title="{Binding Title}"
+             x:Name="BrowseNotesPage">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Push"
+                    Clicked="Push_Clicked"
+                    IconImageSource="arrow_up.png" />
+        <ToolbarItem Text="Pull"
+                    Clicked="Pull_Clicked"
+                    IconImageSource="arrow_down.png" />
+        <ToolbarItem Text="Add"
+                    Clicked="AddItem_Clicked"
+                    IconImageSource="plus.png" />
+        <!--<ToolbarItem Text="Sync"
+                    Clicked="Sync_Clicked"
+                    IconImageSource="sync.png" />-->
+    </ContentPage.ToolbarItems>
+    <AbsoluteLayout>
+        <RefreshView IsRefreshing="{Binding IsBusy, Mode=TwoWay}" x:Name="mainLayout"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutFlags="All">
+            <CollectionView x:Name="NotesCollectionView"
+                ItemsSource="{Binding Notes}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout Padding="10">
+                            <Label Text="{Binding Title}"
+                               FontSize="16"
+                               Style="{DynamicResource ListItemTextStyle}" />
+                            <StackLayout.GestureRecognizers>
+                                <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnItemSelected"></TapGestureRecognizer>
+                                <SwipeGestureRecognizer Direction="Left,Right" Swiped="OnItemSwiped"/>
+                            </StackLayout.GestureRecognizers>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+        <StackLayout
+        x:Name="aiLayout"
+        IsVisible="False"
+        AbsoluteLayout.LayoutBounds="0,0,1,1"
+        AbsoluteLayout.LayoutFlags="All"
+        BackgroundColor="Gray" Opacity="0.5">
+            <ActivityIndicator
+            x:Name="ai"
+            IsRunning="{Binding IsBusy}"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+    </AbsoluteLayout>
+</ContentPage>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Notes.Mobile.Views.CloudSyncPage"
+             Title="{Binding Title}"
+             x:Name="CloudSynchronisationPage">
+    <ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout x:Name="mainLayout"
+                    AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutFlags="All">
+                <Label Margin="2" Text="{Binding ValidTill, StringFormat='Token valid till: {0}'}" />
+            <Label Text="Server Url" Padding="5"></Label>
+                <Entry Text="{Binding ServerUrl}" x:Name="entryUrlField" Margin="5, 0, 5, 0"></Entry>
+            <Label Text="Username" Padding="5"></Label>
+                <Entry Text="{Binding Username}" x:Name="entryUsernameField" Margin="5, 0, 5, 0"></Entry>
+            <Label Text="Email" Padding="5"></Label>
+                <Entry Text="{Binding Email}" x:Name="entryEmailField" Margin="5, 0, 5, 0"></Entry>
+            <Label Text="Password" Padding="5"></Label>
+                <Entry Text="{Binding Password}" x:Name="entryPasswordField" Margin="5, 0, 5, 0"></Entry>
+                <Button Margin="20, 0, 20, 0" x:Name="loginButton" Text="Login" Clicked="loginButton_Clicked"></Button>
+                <Button Margin="20, 0, 20, 0" x:Name="registerButton" Text="Register" Clicked="registerButton_Clicked"></Button>
+                <Button Margin="20, 0, 20, 0" x:Name="logoutButton" Text="Log out" Clicked="logoutButton_Clicked" IsEnabled="False"></Button>
+                <Label HorizontalTextAlignment="Center" Text="Take special caution when synchronizing notes. If you do a pull, some of your existing notes might get overwritten and if you do a push, some of your existing notes on external server might get overwritten."></Label>
+        </StackLayout>
+        <StackLayout
+        x:Name="aiLayout"
+        IsVisible="False"
+        AbsoluteLayout.LayoutBounds="0,0,1,1"
+        AbsoluteLayout.LayoutFlags="All"
+        BackgroundColor="Gray" Opacity="0.5">
+            <ActivityIndicator
+            x:Name="ai"
+            IsRunning="{Binding IsBusy}"
+            HorizontalOptions="CenterAndExpand"
+            VerticalOptions="CenterAndExpand" />
+        </StackLayout>
+        </AbsoluteLayout>
+    </ContentPage.Content>
+</ContentPage>

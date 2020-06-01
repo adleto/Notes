@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Notes.Mobile.Views.EncryptionKeyPage"
+             Title="{Binding Title}"
+             x:Name="EncryptionKeyDataPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Margin="5, 0, 5, 0" x:Name="secretKeyField" HorizontalTextAlignment="Center" Text="{Binding SecretKey}" />
+            <Button Margin="5, 0, 5, 0" x:Name="saveKeyButton" Text="Save New Key" Clicked="saveKeyButton_Clicked"></Button>
+            <Button Margin="5, 0, 5, 0" x:Name="showKeyButton" Text="Show Your Key" Clicked="showKeyButton_Clicked"></Button>
+            <Button Margin="5, 0, 5, 0" x:Name="resetKeyButton" Text="Regenerate Key" Clicked="resetKeyButton_Clicked"></Button>
+            <Label HorizontalTextAlignment="Center" Padding="3">
+                To backup your key click on "Show your key" button and copy/paste it to safe location. If you wish to change your key, you can do so after clicking on "Show your key" button and "Save new key" button after you input your new key. To regenerate key click on "Regenerate key". If you change your key in any way all of your notes will be deleted. New key has to have exactly 24 characters.
+            </Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

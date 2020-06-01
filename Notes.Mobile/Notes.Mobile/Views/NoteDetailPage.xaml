@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Notes.Mobile.Views.NoteDetailPage"
+             Title="Note">
+    
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cancel" Clicked="Cancel_Clicked" IconImageSource="close.png" />
+        <ToolbarItem Text="Save" Clicked="Save_Clicked" IconImageSource="plus.png" />
+    </ContentPage.ToolbarItems>
+
+    <ContentPage.Content>
+        <StackLayout Spacing="20" Padding="15">
+            <Label Text="{Binding Note.Modified, StringFormat='Last modified at: {0}'}" FontSize="Small" />
+            <Label Text="Title" FontSize="Medium" />
+            <Entry Text="{Binding Note.Title}" d:Text="Note Title" FontSize="Small" />
+            <Label Text="Content" FontSize="Medium" />
+            <Editor Text="{Binding Note.Text}" d:Text="Note Content" AutoSize="TextChanges" FontSize="Small" Margin="0" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
