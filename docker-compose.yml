@@ -1,0 +1,31 @@
+version: "3"
+services:
+    api:
+        restart: unless-stopped
+        build:
+          context: .
+        environment:
+            - ConnectionStrings:Notes.Api=Server=db;Port=5432;Database=mynotedb;User Id=postgres;Password=YourMostSecurePassword;Pooling=true;
+        ports:
+            - "80:80"
+        depends_on:
+            - db
+        links:
+            - db
+        networks:
+            - notesnet
+
+    db:
+        restart: unless-stopped
+        image: "postgres:alpine"
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: YourMostSecurePassword
+            POSTGRES_DB: mynotedb
+        ports:
+            - 5432:5432
+        networks:
+            - notesnet
+networks:
+  notesnet:
+    driver: bridge

@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Notes.Api.Helpers;
+using Notes.Database;
 
 namespace Notes.Api
 {
@@ -7,7 +10,15 @@ namespace Notes.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var host = CreateHostBuilder(args).Build();
+
+            using (var scope = host.Services.CreateScope())
+            {
+                var service = scope.ServiceProvider.GetRequiredService<Context>();
+                SetupService.MigrateDatabase(service);
+            }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

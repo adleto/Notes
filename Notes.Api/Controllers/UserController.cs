@@ -45,26 +45,31 @@ namespace Notes.Api.Controllers
         [HttpPost]
         public IActionResult GetToken([FromBody] ApplicationUserGetRequestModel model)
         {
-            var user = _userService.Get(model);
-            if (user == null)
-            {
-                return BadRequest(new { message = "Incorrect username/email or password." });
+            try {
+                var user = _userService.Get(model);
+                if (user == null)
+                {
+                    return BadRequest(new { message = "Incorrect username/email or password." });
+                }
+                var tokenHandler = new JwtSecurityTokenHandler();
+                var key = Encoding.UTF8.GetBytes(_appSettings.SecretKey);
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Username),
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim("UserId", user.Id.ToString())
+                };
+                var token = new JwtSecurityToken(
+                    issuer: "Notes.App",
+                    expires: DateTime.Now.AddMonths(3),
+                    claims: claims,
+                    signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+                );
+                return Ok(new TokenModel { Token = tokenHandler.WriteToken(token) });
             }
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.UTF8.GetBytes(_appSettings.SecretKey);
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Username),
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim("UserId", user.Id.ToString())
-            };
-            var token = new JwtSecurityToken(
-                issuer: "Notes.App",
-                expires: DateTime.Now.AddMonths(3),
-                claims: claims,
-                signingCredentials: new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            );
-            return Ok(new TokenModel { Token = tokenHandler.WriteToken(token) });
+            catch {
+                return BadRequest();
+            }
         }
     }
 }
